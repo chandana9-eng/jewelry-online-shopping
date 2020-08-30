@@ -35,7 +35,13 @@ input[type=submit]:hover {
   background-color: #f2f2f2;
   padding: 20px;
 }
+
+div {
+  left: 350px;
+} 
 </style>
+<script src="https://www.paypal.com/sdk/js?client-id=sb"></script>
+
 </head>
 <body>
 <table align="center">
@@ -78,26 +84,32 @@ input[type=submit]:hover {
     </form>
   
 
-<form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
-<input type="hidden" name="cmd" value="_s-xclick">
-<input type="hidden" name="hosted_button_id" value="LZBX7AU7C9HH4">
-<table>
-<tr><td><input type="hidden" name="on0" value="Items">Items</td></tr><tr><td><select name="os0">
-	<option value="1">1 $1,900.00 USD</option>
-</select> </td></tr>
-</table>
-<input type="hidden" name="currency_code" value="USD">
-<input type="image" src="https://www.paypalobjects.com/en_GB/i/btn/btn_buynowCC_LG.gif" border="0" name="submit" alt="PayPal – The safer, easier way to pay online!">
-<img alt="" border="0" src="https://www.paypalobjects.com/en_GB/i/scr/pixel.gif" width="1" height="1">
-</form>
-
-
-
 </div>
 </td>
-
 </tr>
-
 </table>
+<center>
+<div id = "paypal1">
+<script>paypal.Buttons({
+    createOrder: function(data, actions) {
+      // This function sets up the details of the transaction, including the amount and line item details.
+      return actions.order.create({
+        purchase_units: [{
+          amount: {
+            value: '0.01'
+          }
+        }]
+      });
+    },
+    onApprove: function(data, actions) {
+      // This function captures the funds from the transaction.
+      return actions.order.capture().then(function(details) {
+        // This function shows a transaction success message to your buyer.
+        alert('Transaction completed by ' + details.payer.name.given_name);
+      });
+    }
+  }).render('body');</script>
+</div>
+</center>
 </body>
 </html>
